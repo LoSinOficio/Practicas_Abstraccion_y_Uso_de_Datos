@@ -2,25 +2,34 @@
 
 using namespace std;
 
-// Sin parametros
-void mostrar() {
-    cout << "Sin parametros" << endl;
-}
+class CalculadoraSobrecarga {
+public:
+    // 1. MÃ©todo sin parÃ¡metros (0 parÃ¡metros)
+    void sumar() {
+        cout << "Metodo de 0 parametros -> No hay valores para sumar." << endl;
+    }
 
-// Con 2 parametros
-void mostrar(int a, int b) {
-    cout << "Suma 2 parametros: " << a + b << endl;
-}
+    // 2. MÃ©todo con 2 parÃ¡metros
+    void sumar(int a, int b) {
+        cout << "Suma de 2 parametros (" << a << " + " << b << ") = " << (a + b) << endl;
+    }
 
-// Con 3 parametros
-void mostrar(int a, int b, int c) {
-    cout << "Suma 3 parametros: " << a + b + c << endl;
-}
+    // 3. MÃ©todo con 3 parÃ¡metros
+    void sumar(int a, int b, int c) {
+        cout << "Suma de 3 parametros (" << a << " + " << b << " + " << c << ") = " << (a + b + c) << endl;
+    }
+};
 
 int main() {
-    mostrar();
-    mostrar(2, 3);
-    mostrar(1, 2, 3);
-    return 0;
+    // CreaciÃ³n del objeto de la clase
+    CalculadoraSobrecarga calc;
+
+    cout << "=== EJERCICIO 4: SOBRECARGA EN POO ===" << endl;
     
+    // Probando las variantes de la funciÃ³n
+    calc.sumar();         // Llama a la de 0 parÃ¡metros
+    calc.sumar(10, 20);   // Llama a la de 2 parÃ¡metros
+    calc.sumar(5, 10, 15); // Llama a la de 3 parÃ¡metros
+
+    return 0;
 }

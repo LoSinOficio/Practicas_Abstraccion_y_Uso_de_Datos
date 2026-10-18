@@ -24,6 +24,7 @@ public:
     }
 };
 
+
 int main() {
     // 1. Creación del objeto de la clase Lista (Instanciación)
     Lista miObjetoLista;

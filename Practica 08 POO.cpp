@@ -25,6 +25,7 @@ public:
         cout << "Maximo: " << max << endl;
         cout << "Minimo: " << min << endl;
     }
+    
 };
 
 int main() {

@@ -36,6 +36,7 @@ public:
     }
 };
 
+
 int main() {
     int numeros[] = {38, 27, 43, 3, 9, 82, 10};
     int n = 7;

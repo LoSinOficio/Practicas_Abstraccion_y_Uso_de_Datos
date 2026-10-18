@@ -12,6 +12,7 @@ struct PersonaData {
     string nombre, ap, am;
     char genero;
     int edad;
+    
 };
 
 int main() {

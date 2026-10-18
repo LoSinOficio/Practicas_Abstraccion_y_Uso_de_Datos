@@ -17,6 +17,7 @@ public:
     int edad;
 };
 
+
 int main() {
     cout << "=== Tamano de tipos de datos (bytes) ===\n";
     cout << "char: " << sizeof(char) << '\n';

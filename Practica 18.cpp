@@ -22,6 +22,7 @@ private:
         return (i + 1);
     }
 
+    
 public:
     static void quickSort(int arr[], int low, int high) {
         if (low < high) {

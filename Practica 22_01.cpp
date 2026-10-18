@@ -19,6 +19,7 @@ struct Persona {
     }
 };
 
+
 // Clase que administra la relación
 class GestorPersonas {
 public:

@@ -32,6 +32,7 @@ public:
     }
 };
 
+
 int main() {
     Cola cola;
     int opcion, valor;

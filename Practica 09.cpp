@@ -26,3 +26,4 @@ int main() {
     cout << "Minimo: " << minimo << '\n';
     return 0;
 }
+

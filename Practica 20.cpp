@@ -20,6 +20,7 @@ private:
         while (j < n2) ptrs[k++] = R[j++];
     }
 
+    
 public:
     static void ordenar(int* ptrs[], int l, int r) {
         if (l < r) {

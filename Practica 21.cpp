@@ -21,6 +21,7 @@ private:
         return (i + 1);
     }
 
+    
 public:
     static void ordenar(int* ptrs[], int low, int high) {
         if (low < high) {

@@ -12,7 +12,6 @@
 
 ## Indice
 
-- [Desarrollo de soluciones](#desarrollo-de-soluciones)
 - [Practica 01.cpp](#practica-01cpp)
 - [Practica 02.cpp](#practica-02cpp)
 - [Practica 03.cpp](#practica-03cpp)

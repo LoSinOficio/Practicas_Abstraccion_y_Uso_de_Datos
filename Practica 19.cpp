@@ -18,6 +18,7 @@ public:
     }
 };
 
+
 int main() {
     int datos[] = {50, 10, 40, 20, 30};
     int n = 5;

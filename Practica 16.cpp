@@ -4,32 +4,28 @@
 
 using namespace std;
 
-// Definición de la estructura Auto
+// Estructura de datos
 struct Auto {
     string marca;
     int anio;
     double precio;
 
-    // Sobrecarga del operador < para comparar autos por marca y año
     bool operator<(const Auto& otro) const {
         if (marca != otro.marca) return marca < otro.marca;
         return anio < otro.anio;
     }
 };
 
-// Sobrecarga del operador << para imprimir objetos de tipo Auto fácilmente
 ostream& operator<<(ostream& salida, const Auto& a) {
-    salida << "[Marca: " << a.marca << ", anio: " << a.anio
-           << ", precio: " << a.precio << "]";
+    salida << "[Marca: " << a.marca << ", anio: " << a.anio << ", precio: " << a.precio << "]";
     return salida;
 }
 
-// Clase orientada a objetos para manejar el ordenamiento y visualización
-class OrdenadorBurbuja {
+// 1. Responsabilidad: Ordenar datos (Principio SOLID: Single Responsibility)
+class Ordenador {
 public:
-    // Método genérico para ordenar cualquier tipo de vector usando burbuja
     template <typename T>
-    void ordenar(vector<T>& datos) {
+    static void burbuja(vector<T>& datos) {
         for (size_t i = 0; i < datos.size(); ++i) {
             bool huboCambio = false;
             for (size_t j = 0; j + 1 < datos.size() - i; ++j) {
@@ -43,10 +39,14 @@ public:
             if (!huboCambio) break;
         }
     }
+};
 
-    // Método genérico para mostrar los elementos del vector
+// 2. Responsabilidad: Mostrar datos
+class Visualizador {
+public:
     template <typename T>
-    void mostrar(const vector<T>& datos) {
+    static void mostrar(const string& mensaje, const vector<T>& datos) {
+        cout << mensaje;
         for (const auto& elemento : datos) {
             cout << elemento << " ";
         }
@@ -55,7 +55,6 @@ public:
 };
 
 int main() {
-    // Vectores de prueba
     vector<int> enteros = {8, 3, 9, 1, 5};
     vector<char> caracteres = {'z', 'a', 'm', 'b', 'c'};
     vector<Auto> autos = {
@@ -65,23 +64,15 @@ int main() {
         {"Audi", 2022, 450000}
     };
 
-    // Creación del objeto de la clase OrdenadorBurbuja
-    OrdenadorBurbuja ordenador;
+    // Ordenar usando la clase Ordenador
+    Ordenador::burbuja(enteros);
+    Ordenador::burbuja(caracteres);
+    Ordenador::burbuja(autos);
 
-    // Aplicar el método de ordenamiento a través del objeto
-    ordenador.ordenar(enteros);
-    ordenador.ordenar(caracteres);
-    ordenador.ordenar(autos);
-
-    // Mostrar resultados usando los métodos del objeto
-    cout << "Enteros ordenados: ";
-    ordenador.mostrar(enteros);
-    
-    cout << "Caracteres ordenados: ";
-    ordenador.mostrar(caracteres);
-    
-    cout << "Autos ordenados por marca y despues anio:\n";
-    ordenador.mostrar(autos);
+    // Mostrar usando la clase Visualizador
+    Visualizador::mostrar("Enteros ordenados: ", enteros);
+    Visualizador::mostrar("Caracteres ordenados: ", caracteres);
+    Visualizador::mostrar("Autos ordenados por marca y despues anio:\n", autos);
 
     return 0;
 }

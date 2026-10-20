@@ -3,14 +3,39 @@
 
 using namespace std;
 
-// Definición de la clase con un nombre más sencillo
-class Cola {
+// 1. Responsabilidad: Lógica de la Cola Dinámica con STL 
+class ColaDinamicaSTL {
 private:
-    queue<int> cola; // Cola dinámica de la biblioteca estándar de C++
+    queue<int> cola;
 
 public:
-    // Método para mostrar el menú y controlar las operaciones
-    void ejecutarMenu() {
+    void encolar(int valor) {
+        cola.push(valor);
+        cout << "Elemento agregado.\n";
+    }
+
+    bool estaVacia() const {
+        return cola.empty();
+    }
+
+    int obtenerFrente() const {
+        return cola.front();
+    }
+
+    void desencolar() {
+        cola.pop();
+    }
+
+    // Método seguro para obtener una copia y recorrerla sin romper el encapsulamiento
+    queue<int> obtenerCopia() const {
+        return cola;
+    }
+};
+
+class MenuCola {
+public:
+    static void ejecutar() {
+        ColaDinamicaSTL miCola;
         int opcion, valor;
 
         do {
@@ -22,31 +47,29 @@ public:
                 case 1:
                     cout << "Valor: ";
                     cin >> valor;
-                    cola.push(valor);
-                    cout << "Elemento agregado.\n";
+                    miCola.encolar(valor);
                     break;
                 case 2:
-                    if (cola.empty()) {
+                    if (miCola.estaVacia()) {
                         cout << "La cola esta vacia.\n";
                     } else { 
-                        cout << "Elemento eliminado: " << cola.front() << '\n'; 
-                        cola.pop(); 
+                        cout << "Elemento eliminado: " << miCola.obtenerFrente() << '\n'; 
+                        miCola.desencolar(); 
                     }
                     break;
                 case 3:
-                    if (cola.empty()) {
+                    if (miCola.estaVacia()) {
                         cout << "La cola esta vacia.\n";
                     } else {
-                        cout << "Frente de la cola: " << cola.front() << '\n';
+                        cout << "Frente de la cola: " << miCola.obtenerFrente() << '\n';
                     }
                     break;
                 case 4: {
-                    if (cola.empty()) { 
+                    if (miCola.estaVacia()) { 
                         cout << "Cola vacia.\n"; 
                         break; 
                     }
-                    // Se usa una copia temporal para mostrar los elementos sin alterar la cola original
-                    queue<int> copia = cola;
+                    queue<int> copia = miCola.obtenerCopia();
                     cout << "Frente -> ";
                     while (!copia.empty()) { 
                         cout << copia.front() << " "; 
@@ -66,12 +89,6 @@ public:
 };
 
 int main() {
-    // 1. Creación del objeto usando la clase Cola
-    Cola miCola;
-
-    // 2. Invocación del método principal a través del objeto
-    miCola.ejecutarMenu();
-
+    MenuCola::ejecutar();
     return 0;
-    
 }

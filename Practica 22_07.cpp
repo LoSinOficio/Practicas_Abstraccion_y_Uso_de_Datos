@@ -1,37 +1,35 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-// 1. Estructura del Nodo auto-referenciado para la Cola
-struct Nodo {
-    int dato;
-    Nodo* siguiente; // Puntero al siguiente nodo
-};
-
-// 2. Clase orientada a objetos para la Cola Dinámica
+// 1. Responsabilidad: Lógica de la Cola Dinámica con Nodos y Punteros 
 class ColaDinamica {
 private:
+    struct Nodo {
+        int dato;
+        Nodo* siguiente;
+        Nodo(int valor, Nodo* sig = nullptr) : dato(valor), siguiente(sig) {}
+    };
+
     Nodo* frente;
     Nodo* final;
 
 public:
-    // Constructor
-    ColaDinamica() {
-        frente = nullptr;
-        final = nullptr;
+    ColaDinamica() : frente(nullptr), final(nullptr) {}
+
+    ~ColaDinamica() {
+        while (frente != nullptr) {
+            Nodo* temp = frente;
+            frente = frente->siguiente;
+            delete temp;
+        }
     }
 
-    // Verificar si la cola está vacía
-    bool estaVacia() {
-        return (frente == nullptr);
-    }
+    bool estaVacia() const { return frente == nullptr; }
 
-    // Método para agregar un elemento a la cola (Enqueue)
     void encolar(int valor) {
-        Nodo* nuevo = new Nodo();
-        nuevo->dato = valor;
-        nuevo->siguiente = nullptr;
-
+        Nodo* nuevo = new Nodo(valor);
         if (estaVacia()) {
             frente = nuevo;
         } else {
@@ -41,18 +39,25 @@ public:
         cout << "Elemento " << valor << " agregado a la cola.\n";
     }
 
-    // Método para mostrar los elementos de la cola
-    void mostrar() {
-        if (estaVacia()) {
+    // Método para exponer el frente de manera segura sin romper encapsulamiento
+    void recorrer(void (*accion)(int)) const {
+        for (Nodo* actual = frente; actual != nullptr; actual = actual->siguiente) {
+            accion(actual->dato);
+        }
+    }
+};
+
+class VisualizadorCola {
+public:
+    static void mostrar(const ColaDinamica& cola) {
+        if (cola.estaVacia()) {
             cout << "La cola esta vacia.\n";
             return;
         }
-        Nodo* actual = frente;
         cout << "\n[FRENTE] -> ";
-        while (actual != nullptr) {
-            cout << actual->dato << " -> ";
-            actual = actual->siguiente;
-        }
+        cola.recorrer([](int dato) {
+            cout << dato << " -> ";
+        });
         cout << "[FINAL]\n";
     }
 };
@@ -67,8 +72,8 @@ int main() {
     miCola.encolar(200);
     miCola.encolar(300);
 
-    // Mostrar estructura
-    miCola.mostrar();
+    // Mostrar estructura usando la clase VisualizadorCola
+    VisualizadorCola::mostrar(miCola);
 
     return 0;
 }

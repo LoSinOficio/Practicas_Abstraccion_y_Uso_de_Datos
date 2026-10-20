@@ -1,13 +1,15 @@
-// Ejercicio 17: Merge Sort (Caracteres, Enteros y Tipo Personalizado) - PE y POO
 #include <iostream>
 #include <string>
+
 using namespace std;
 
+// Estructura de datos
 struct Producto {
     string nombre;
     float precio;
 };
 
+// 1. Responsabilidad: Lógica del algoritmo Merge Sort 
 class OrdenadorMerge {
 private:
     static void mezclarEnteros(int arr[], int l, int m, int r) {
@@ -36,17 +38,27 @@ public:
     }
 };
 
+class Visualizador {
+public:
+    static void mostrarEnteros(const string& mensaje, const int arr[], int n) {
+        cout << mensaje;
+        for (int i = 0; i < n; i++) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
 
 int main() {
     int numeros[] = {38, 27, 43, 3, 9, 82, 10};
     int n = 7;
 
+    // Ordenar con la clase OrdenadorMerge
     OrdenadorMerge::mergeSortEnteros(numeros, 0, n - 1);
 
+    // Mostrar resultados con la clase Visualizador
     cout << "--- Merge Sort ---" << endl;
-    cout << "Enteros ordenados: ";
-    for (int i = 0; i < n; i++) cout << numeros[i] << " ";
-    cout << endl;
+    Visualizador::mostrarEnteros("Enteros ordenados: ", numeros, n);
 
     return 0;
 }

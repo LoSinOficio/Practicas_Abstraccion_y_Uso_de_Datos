@@ -3,27 +3,35 @@
 
 using namespace std;
 
-// Clase orientada a objetos que encapsula la Pila basada en STL
+// 1. Responsabilidad: Lógica de la Pila Dinámica con STL 
 class PilaDinamicaSTL {
 private:
-    stack<int> pila; // Contenedor dinámico de la librería estándar
+    stack<int> pila;
 
 public:
-    // Método para apilar un elemento (Push)
     void apilar(int valor) {
         pila.push(valor);
         cout << "Elemento " << valor << " apilado en la cima.\n";
     }
 
-    // Método para mostrar los elementos de la pila desde la cima hasta la base
-    void mostrar() {
-        if (pila.empty()) {
+    bool estaVacia() const {
+        return pila.empty();
+    }
+
+    // Método seguro para obtener una copia y recorrerla sin romper el encapsulamiento
+    stack<int> obtenerCopia() const {
+        return pila;
+    }
+};
+
+class VisualizadorPila {
+public:
+    static void mostrar(const PilaDinamicaSTL& pilaObj) {
+        stack<int> temp = pilaObj.obtenerCopia();
+        if (temp.empty()) {
             cout << "La pila esta vacia.\n";
             return;
         }
-
-        // Se utiliza una pila auxiliar temporal para no perder los datos originales al recorrerlos
-        stack<int> temp = pila;
         cout << "\n[CIMA] -> ";
         while (!temp.empty()) {
             cout << temp.top() << " -> ";
@@ -43,8 +51,8 @@ int main() {
     miPila.apilar(20);
     miPila.apilar(30);
 
-    // Mostrar estructura
-    miPila.mostrar();
+    // Mostrar estructura usando la clase VisualizadorPila
+    VisualizadorPila::mostrar(miPila);
 
     return 0;
 }

@@ -1,55 +1,65 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-// 1. Estructura del Nodo auto-referenciado para la Lista
-struct Nodo {
-    int dato;
-    Nodo* siguiente; // Puntero que apunta al siguiente nodo de la lista
-};
-
-// 2. Clase orientada a objetos para administrar la Lista Dinámica
+// 1. Responsabilidad: Lógica de la Lista Dinámica con Nodos y Punteros 
 class ListaDinamica {
 private:
-    Nodo* cabeza; // Puntero que apunta al inicio de la lista
+    struct Nodo {
+        int dato;
+        Nodo* siguiente;
+        Nodo(int valor, Nodo* sig = nullptr) : dato(valor), siguiente(sig) {}
+    };
+
+    Nodo* cabeza;
 
 public:
-    // Constructor: Inicializa la lista vacía
-    ListaDinamica() {
-        cabeza = nullptr;
+    ListaDinamica() : cabeza(nullptr) {}
+
+    ~ListaDinamica() {
+        while (cabeza != nullptr) {
+            Nodo* temp = cabeza;
+            cabeza = cabeza->siguiente;
+            delete temp;
+        }
     }
 
-    // Método para insertar un elemento al final de la lista
-    void insertar(int valor) {
-        Nodo* nuevo = new Nodo();
-        nuevo->dato = valor;
-        nuevo->siguiente = nullptr;
+    bool estaVacia() const { return cabeza == nullptr; }
 
-        if (cabeza == nullptr) {
-            cabeza = nuevo; // Si está vacía, el nuevo nodo es la cabeza
+    void insertar(int valor) {
+        Nodo* nuevo = new Nodo(valor);
+        if (estaVacia()) {
+            cabeza = nuevo;
         } else {
             Nodo* actual = cabeza;
-            // Recorremos hasta llegar al último nodo
             while (actual->siguiente != nullptr) {
                 actual = actual->siguiente;
             }
-            actual->siguiente = nuevo; // Conectamos el nuevo nodo al final
+            actual->siguiente = nuevo;
         }
         cout << "Elemento " << valor << " insertado en la lista.\n";
     }
 
-    // Método para mostrar todos los elementos de la lista de manera indirecta
-    void mostrar() {
-        if (cabeza == nullptr) {
+    // Recorrido seguro mediante un callback para no exponer la estructura interna
+    void recorrer(void (*accion)(int)) const {
+        for (Nodo* actual = cabeza; actual != nullptr; actual = actual->siguiente) {
+            accion(actual->dato);
+        }
+    }
+};
+
+class VisualizadorLista {
+public:
+    static void mostrar(const ListaDinamica& lista) {
+        if (lista.estaVacia()) {
             cout << "La lista esta vacia.\n";
             return;
         }
-        Nodo* actual = cabeza;
         cout << "\n[CABEZA] -> ";
-        while (actual != nullptr) {
-            cout << actual->dato << " -> ";
-            actual = actual->siguiente;
-        }
+        lista.recorrer([](int dato) {
+            cout << dato << " -> ";
+        });
         cout << "[NULL]\n";
     }
 };
@@ -64,8 +74,8 @@ int main() {
     miLista.insertar(20);
     miLista.insertar(30);
 
-    // Mostrando la lista resultante
-    miLista.mostrar();
+    // Mostrando la lista resultante mediante la clase VisualizadorLista
+    VisualizadorLista::mostrar(miLista);
 
     return 0;
 }

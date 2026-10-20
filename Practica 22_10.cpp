@@ -3,34 +3,54 @@
 
 using namespace std;
 
-// Definición de la clase para manejar la Lista
-class Lista {
+// 1. Responsabilidad: Lógica de la Lista Dinámica con STL 
+class ListaDinamicaSTL {
 private:
-    list<int> elementos; // Lista dinámica de la biblioteca estándar de C++
+    list<int> elementos;
 
 public:
-    // Método para inicializar y mostrar los elementos
-    void mostrarLista() {
-        elementos.push_back(10);
-        elementos.push_back(20);
-        elementos.push_front(5);
+    void agregarAlFinal(int valor) {
+        elementos.push_back(valor);
+    }
 
+    void agregarAlFrente(int valor) {
+        elementos.push_front(valor);
+    }
+
+    bool estaVacia() const {
+        return elementos.empty();
+    }
+
+    // Método seguro para obtener una copia y recorrerla sin romper el encapsulamiento
+    list<int> obtenerCopia() const {
+        return elementos;
+    }
+};
+
+// 2. Responsabilidad: Visualización e impresión de datos 
+class VisualizadorLista {
+public:
+    static void mostrar(const ListaDinamicaSTL& listaObj) {
+        list<int> temp = listaObj.obtenerCopia();
         cout << "--- Lista STL ---" << endl;
         cout << "Elementos de la lista: ";
-        for (int v : elementos) {
+        for (int v : temp) {
             cout << v << " ";
         }
         cout << endl;
     }
 };
 
-
 int main() {
-    // 1. Creación del objeto de la clase Lista (Instanciación)
-    Lista miObjetoLista;
+    ListaDinamicaSTL miLista;
 
-    // 2. Invocación del método a través del objeto
-    miObjetoLista.mostrarLista();
+    // Inicialización y llenado de datos
+    miLista.agregarAlFinal(10);
+    miLista.agregarAlFinal(20);
+    miLista.agregarAlFrente(5);
+
+    // Mostrar resultados usando la clase VisualizadorLista
+    VisualizadorLista::mostrar(miLista);
 
     return 0;
 }

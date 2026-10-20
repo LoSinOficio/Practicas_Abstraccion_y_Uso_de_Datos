@@ -1,8 +1,9 @@
-// Ejercicio 18: Quick Sort (Caracteres, Enteros y Tipo Personalizado) - PE y POO
 #include <iostream>
 #include <string>
+
 using namespace std;
 
+// 1. Responsabilidad: Lógica del algoritmo Quick Sort 
 class OrdenadorQuick {
 private:
     static int particion(int arr[], int low, int high) {
@@ -22,7 +23,6 @@ private:
         return (i + 1);
     }
 
-    
 public:
     static void quickSort(int arr[], int low, int high) {
         if (low < high) {
@@ -33,16 +33,28 @@ public:
     }
 };
 
+// 2. Responsabilidad: Visualización e impresión de datos 
+class Visualizador {
+public:
+    static void mostrarEnteros(const string& mensaje, const int arr[], int n) {
+        cout << mensaje;
+        for (int i = 0; i < n; i++) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
 int main() {
     int datos[] = {10, 7, 8, 9, 1, 5};
     int n = 6;
 
+    // Ordenar con la clase OrdenadorQuick
     OrdenadorQuick::quickSort(datos, 0, n - 1);
 
+    // Mostrar resultados con la clase Visualizador
     cout << "--- Quick Sort ---" << endl;
-    cout << "Enteros ordenados: ";
-    for (int i = 0; i < n; i++) cout << datos[i] << " ";
-    cout << endl;
+    Visualizador::mostrarEnteros("Enteros ordenados: ", datos, n);
 
     return 0;
 }

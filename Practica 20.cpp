@@ -1,7 +1,9 @@
-// Ejercicio 20: Merge Sort Indirecto usando Arreglo de Punteros
 #include <iostream>
+#include <string>
+
 using namespace std;
 
+// 1. Responsabilidad: Lógica del algoritmo Merge Sort Indirecto 
 class MergeSortIndirecto {
 private:
     static void mezclar(int* ptrs[], int l, int m, int r) {
@@ -20,7 +22,6 @@ private:
         while (j < n2) ptrs[k++] = R[j++];
     }
 
-    
 public:
     static void ordenar(int* ptrs[], int l, int r) {
         if (l < r) {
@@ -32,18 +33,32 @@ public:
     }
 };
 
+class Visualizador {
+public:
+    static void mostrarPunteros(const string& mensaje, int* ptrs[], int n) {
+        cout << mensaje;
+        for (int i = 0; i < n; i++) {
+            cout << *ptrs[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
 int main() {
     int datos[] = {100, 25, 75, 12, 50};
     int n = 5;
     int* ptrs[5];
-    for (int i = 0; i < n; i++) ptrs[i] = &datos[i];
 
+    for (int i = 0; i < n; i++) {
+        ptrs[i] = &datos[i];
+    }
+
+    // Ordenar mediante la clase MergeSortIndirecto
     MergeSortIndirecto::ordenar(ptrs, 0, n - 1);
 
+    // Mostrar resultados usando la clase Visualizador
     cout << "--- Merge Sort Indirecto ---" << endl;
-    cout << "Orden mediante punteros: ";
-    for (int i = 0; i < n; i++) cout << *ptrs[i] << " ";
-    cout << endl;
+    Visualizador::mostrarPunteros("Orden mediante punteros: ", ptrs, n);
 
     return 0;
 }

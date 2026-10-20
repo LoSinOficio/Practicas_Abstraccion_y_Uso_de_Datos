@@ -3,46 +3,52 @@
 
 using namespace std;
 
-// Estructura auto-referenciada
+// Estructura auto-referenciada de dominio
 struct Persona {
     string nombre;
     int edad;
-    
-    // Puntero que apunta a otra variable del mismo tipo (Persona)
     Persona* siguientePersona; 
 
-    // Constructor para inicializar fácilmente
     Persona(string n, int e) {
         nombre = n;
         edad = e;
-        siguientePersona = nullptr; // Inicialmente no apunta a nadie
+        siguientePersona = nullptr;
     }
 };
 
-
-// Clase que administra la relación
-class GestorPersonas {
+// 1. Responsabilidad: Administrar y vincular las relaciones entre objetos 
+class GestorRelaciones {
 public:
-    void mostrarRelacion(Persona& p1, Persona& p2) {
-        // Conectamos la persona 1 con la persona 2 de manera indirecta
+    static void vincular(Persona& p1, Persona& p2) {
         p1.siguientePersona = &p2;
+    }
+};
 
+//  impresión de las relaciones 
+class VisualizadorRelacion {
+public:
+    static void mostrar(const Persona& p1) {
         cout << "=== EJERCICIO 1: PUNTERO AL MISMO TIPO DE DATO ===" << endl;
         cout << "Persona Principal: " << p1.nombre << " (" << p1.edad << " anos)" << endl;
         
-        // Accedemos a la segunda persona usando el puntero de la primera
-        cout << "Vinculada (via puntero): " << p1.siguientePersona->nombre 
-             << " (" << p1.siguientePersona->edad << " anos)" << endl;
+        if (p1.siguientePersona != nullptr) {
+            cout << "Vinculada (via puntero): " << p1.siguientePersona->nombre 
+                 << " (" << p1.siguientePersona->edad << " anos)" << endl;
+        } else {
+            cout << "Sin persona vinculada." << endl;
+        }
     }
 };
 
 int main() {
-    // Creamos dos objetos de tipo Persona
     Persona p1("Erick", 21);
     Persona p2("Sofia", 20);
 
-    GestorPersonas gestor;
-    gestor.mostrarRelacion(p1, p2);
+    // Vincular usando la clase GestorRelaciones
+    GestorRelaciones::vincular(p1, p2);
+
+    // Mostrar resultados usando la clase VisualizadorRelacion
+    VisualizadorRelacion::mostrar(p1);
 
     return 0;
 }

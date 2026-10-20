@@ -3,25 +3,18 @@
 
 using namespace std;
 
-// Definición del Tipo de Dato Abstracto (ADT) CuentaBancaria
+// 1. Responsabilidad: Lógica del Tipo de Dato Abstracto (ADT) Cuenta Bancaria 
 class CuentaBancaria {
 private:
-    // Los datos están ocultos y protegidos (Encapsulamiento)
     string titular;
     double saldo;
 
 public:
-    // Constructor para inicializar el ADT
     CuentaBancaria(string nombreTitular, double saldoInicial) {
         titular = nombreTitular;
-        if (saldoInicial >= 0) {
-            saldo = saldoInicial;
-        } else {
-            saldo = 0;
-        }
+        saldo = (saldoInicial >= 0) ? saldoInicial : 0;
     }
 
-    // Operación permitida 1: Depositar dinero
     void depositar(double monto) {
         if (monto > 0) {
             saldo += monto;
@@ -31,28 +24,33 @@ public:
         }
     }
 
-    // Operación permitida 2: Consultar saldo actual
-    void consultarSaldo() {
-        cout << "Titular: " << titular << " | Saldo actual: $" << saldo << endl;
+    string getTitular() const { return titular; }
+    double getSaldo() const { return saldo; }
+};
+
+class VisualizadorCuenta {
+public:
+    static void mostrarEncabezado() {
+        cout << "=== EJERCICIO 2: TIPO DE DATO ABSTRACTO (ADT) ===" << endl;
+    }
+
+    static void mostrar(const CuentaBancaria& cuenta) {
+        cout << "Titular: " << cuenta.getTitular() << " | Saldo actual: $" << cuenta.getSaldo() << endl;
     }
 };
 
 int main() {
-    cout << "=== EJERCICIO 2: TIPO DE DATO ABSTRACTO (ADT) ===" << endl;
+    VisualizadorCuenta::mostrarEncabezado();
 
     // Instanciamos el ADT
     CuentaBancaria cuenta1("Erick Cruz", 5000.0);
 
-    // Interactuamos exclusivamente a través de la interfaz pública
-    cuenta1.consultarSaldo();
+    // Interactuamos a través de la interfaz pública
+    VisualizadorCuenta::mostrar(cuenta1);
     
     cuenta1.depositar(1500.0);
     
-    cuenta1.consultarSaldo();
-
-    // Nota: Intentar acceder directamente a 'cuenta1.saldo' marcaría un error de compilación 
-    // porque los datos están protegidos (Principio del ADT).
+    VisualizadorCuenta::mostrar(cuenta1);
 
     return 0;
-    
 }
